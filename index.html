@@ -7,7 +7,6 @@
     <style>
         /* ================= 核心色彩與變量 ================= */
         :root {
-            /* 修改為柔和護眼的微糖漸變色（淡藍過渡到淡粉白），消除螢光感 */
             --bg-gradient: linear-gradient(120deg, #e8f0fe 0%, #fcf7f8 100%);
             --card-bg: rgba(255, 255, 255, 0.95);
             --text-main: #333333;
@@ -45,7 +44,7 @@
             position: absolute;
             background: #ffffff;
             border-radius: 100px;
-            opacity: 0.5; /* 因背景變淺，略微調高雲朵不透明度使其可見 */
+            opacity: 0.5; 
             filter: blur(3px); 
             animation: floatCloud linear infinite;
         }
@@ -103,7 +102,7 @@
 
         h1 {
             font-size: 2.8em;
-            color: #4a5568; /* 背景變淺，標題顏色加深以確保清晰度 */
+            color: #4a5568; 
             text-shadow: 1px 1px 3px rgba(255,255,255,0.8);
             margin-bottom: 15px;
             letter-spacing: 3px;
@@ -209,22 +208,17 @@
             z-index: 10;
         }
 
+        /* 修正後的統計器：嚴格固定在左下角，不可點擊，無漂浮動畫 */
         #counter {
             position: fixed;
-            /* 向上提升至 80px，確保它懸浮在背景區，不與白色頁尾重疊 */
-            bottom: 80px;
+            bottom: 20px;
             left: 20px;
             z-index: 9999;
             background: rgba(255, 255, 255, 0.8);
             padding: 8px 12px;
             border-radius: 10px;
             box-shadow: 0 4px 15px rgba(0,0,0,0.08);
-            opacity: 0.7; 
-            transition: opacity 0.3s ease, transform 0.3s ease;
-        }
-        #counter:hover {
-            opacity: 1; 
-            transform: scale(1.05);
+            pointer-events: none; /* 完全禁用滑鼠與觸控點擊事件 */
         }
 
         /* 手機版適配 */
@@ -233,8 +227,13 @@
             .intro { font-size: 1.05em; padding: 12px 20px; }
             .module-card { padding: 20px 15px; }
             .link-btn { font-size: 1.05em; padding: 14px 15px; }
-            /* 手機版統計器同樣向上抬升 */
-            #counter { bottom: 75px; left: 10px; padding: 5px; transform: scale(0.9); }
+            
+            /* 手機端確保統計器穩定貼齊邊角 */
+            #counter { 
+                bottom: 15px; 
+                left: 15px; 
+                padding: 5px; 
+            }
         }
     </style>
 </head>
@@ -284,11 +283,9 @@
         網頁僅供VTC内部使用。訓練局普通話培訓測試中心版權所有。
     </footer>
 
-    <!-- 瀏覽人次統計 -->
+    <!-- 瀏覽人次統計：移除 a 標籤，純圖片展示 -->
     <div id="counter">
-        <a href="https://www.freecounterstat.com" title="website counter">
-            <img src="https://counter1.optistats.ovh/private/freecounterstat.php?c=6ge247hdpn5yjddcmerbb6xc9j8816l4" border="0" title="website counter" alt="website counter">
-        </a>
+        <img src="https://counter1.optistats.ovh/private/freecounterstat.php?c=6ge247hdpn5yjddcmerbb6xc9j8816l4" border="0" title="瀏覽人次" alt="瀏覽人次">
     </div>
 
 </body>
