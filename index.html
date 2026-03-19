@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="zh-HK">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>普通話自修室</title>
+    <style>
+        /* ================= 核心色彩與變量 ================= */
+        :root {
+            /* 修改為柔和護眼的微糖漸變色（淡藍過渡到淡粉白），消除螢光感 */
+            --bg-gradient: linear-gradient(120deg, #e8f0fe 0%, #fcf7f8 100%);
+            --card-bg: rgba(255, 255, 255, 0.95);
+            --text-main: #333333;
+            --cat1-color: #F7A5A5; 
+            --cat2-color: #6D94C5;
+            --cat3-color: #61d4b3; 
+        }
+
+        /* ================= 全局樣式與圓體字型 ================= */
+        body {
+            font-family: 'Yuanti SC', 'YouYuan', 'STYuanti', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+            background: var(--bg-gradient);
+            background-size: 200% 200%;
+            animation: gradientMove 10s ease infinite; 
+            color: var(--text-main);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* ================= 柔和的漂浮雲朵 ================= */
+        .bg-clouds {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -1;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .cloud {
+            position: absolute;
+            background: #ffffff;
+            border-radius: 100px;
+            opacity: 0.5; /* 因背景變淺，略微調高雲朵不透明度使其可見 */
+            filter: blur(3px); 
+            animation: floatCloud linear infinite;
+        }
+
+        .cloud::before, .cloud::after {
+            content: '';
+            position: absolute;
+            background: #ffffff;
+            border-radius: 50%;
+        }
+        .cloud::before {
+            width: 60%; height: 140%;
+            top: -60%; left: 15%;
+        }
+        .cloud::after {
+            width: 45%; height: 110%;
+            top: -40%; right: 15%;
+        }
+
+        .cloud:nth-child(1) { width: 140px; height: 45px; left: -200px; top: 15%; animation-duration: 50s; }
+        .cloud:nth-child(2) { width: 180px; height: 60px; left: -250px; top: 40%; animation-duration: 65s; animation-delay: 5s; }
+        .cloud:nth-child(3) { width: 100px; height: 35px; left: -150px; top: 70%; animation-duration: 45s; animation-delay: 10s; }
+
+        @keyframes floatCloud {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(120vw); }
+        }
+
+        @keyframes gradientMove {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* ================= 內容佈局 ================= */
+        .container {
+            flex: 1;
+            max-width: 850px;
+            margin: 0 auto;
+            padding: 40px 20px 80px 20px; 
+            width: 100%;
+            box-sizing: border-box;
+            z-index: 1;
+        }
+
+        .header-section {
+            text-align: center;
+            margin-bottom: 45px;
+            animation: popIn 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+        }
+        @keyframes popIn {
+            0% { opacity: 0; transform: translateY(-20px) scale(0.9); }
+            100% { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        h1 {
+            font-size: 2.8em;
+            color: #4a5568; /* 背景變淺，標題顏色加深以確保清晰度 */
+            text-shadow: 1px 1px 3px rgba(255,255,255,0.8);
+            margin-bottom: 15px;
+            letter-spacing: 3px;
+        }
+
+        .intro {
+            font-size: 1.2em;
+            color: #444;
+            line-height: 1.8;
+            background: rgba(255, 255, 255, 0.85);
+            padding: 15px 30px;
+            border-radius: 50px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            display: inline-block;
+            font-weight: bold;
+        }
+        .intro span { color: var(--cat1-color); }
+
+        /* ================= 學習模塊卡片 ================= */
+        .modules-wrapper {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+
+        .module-card {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 25px 30px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.04);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border-left: 8px solid; 
+        }
+        .module-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.08);
+        }
+
+        .cat-1 { border-color: var(--cat1-color); }
+        .cat-2 { border-color: var(--cat2-color); }
+
+        .category-title {
+            font-size: 1.4em;
+            margin: 0 0 20px 0;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .cat-1 .category-title { color: var(--cat1-color); }
+        .cat-2 .category-title { color: var(--cat2-color); }
+
+        /* ================= 點擊按鈕 ================= */
+        .links-group {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .link-btn {
+            display: flex;
+            align-items: center;
+            background-color: #ffffff;
+            border: 2px solid #edf2f7;
+            padding: 16px 25px;
+            border-radius: 12px;
+            text-decoration: none;
+            color: #4a5568;
+            font-size: 1.15em;
+            font-weight: bold;
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .link-btn::before {
+            margin-right: 12px;
+            font-size: 1.2em;
+        }
+
+        .cat-1 .link-btn::before { content: '🎮'; }
+        .cat-2 .link-btn:nth-child(1)::before { content: '🎙️'; } 
+        .cat-2 .link-btn:nth-child(2)::before { content: '📝'; } 
+
+        .link-btn:hover, .link-btn:active {
+            background-color: #fcfcfc;
+            transform: scale(1.02);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.06);
+        }
+        
+        .cat-1 .link-btn:hover { border-color: var(--cat1-color); color: var(--cat1-color); }
+        .cat-2 .link-btn:hover { border-color: var(--cat2-color); color: var(--cat2-color); }
+
+        /* ================= 底部與統計器 ================= */
+        footer {
+            text-align: center;
+            padding: 20px;
+            font-size: 0.9em;
+            color: #666;
+            background-color: rgba(255, 255, 255, 0.9);
+            margin-top: auto;
+            position: relative;
+            z-index: 10;
+        }
+
+        #counter {
+            position: fixed;
+            /* 向上提升至 80px，確保它懸浮在背景區，不與白色頁尾重疊 */
+            bottom: 80px;
+            left: 20px;
+            z-index: 9999;
+            background: rgba(255, 255, 255, 0.8);
+            padding: 8px 12px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            opacity: 0.7; 
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+        #counter:hover {
+            opacity: 1; 
+            transform: scale(1.05);
+        }
+
+        /* 手機版適配 */
+        @media (max-width: 600px) {
+            h1 { font-size: 2.2em; }
+            .intro { font-size: 1.05em; padding: 12px 20px; }
+            .module-card { padding: 20px 15px; }
+            .link-btn { font-size: 1.05em; padding: 14px 15px; }
+            /* 手機版統計器同樣向上抬升 */
+            #counter { bottom: 75px; left: 10px; padding: 5px; transform: scale(0.9); }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 雲朵背景 -->
+    <div class="bg-clouds">
+        <div class="cloud"></div>
+        <div class="cloud"></div>
+        <div class="cloud"></div>
+    </div>
+
+    <div class="container">
+        <!-- 標題區 -->
+        <div class="header-section">
+            <h1>普通話自修室</h1>
+            <div class="intro">
+                説著説著就標準了，玩著玩著就記住了。普通話從此<span>不「普通」</span>。
+            </div>
+        </div>
+
+        <!-- 學習模塊區 -->
+        <div class="modules-wrapper">
+            
+            <!-- 類別一 -->
+            <div class="module-card cat-1">
+                <h2 class="category-title">🎯 普通話練習大本營</h2>
+                <div class="links-group">
+                    <a href="https://yangjingjing2019-lang.github.io/-2/" class="link-btn" target="_self">普通話練習大本營 - VTC PSC</a>
+                </div>
+            </div>
+
+            <!-- 類別二 -->
+            <div class="module-card cat-2">
+                <h2 class="category-title">🎧 普通話水平測試朗讀作品練習</h2>
+                <div class="links-group">
+                    <a href="https://echo02-game.github.io/pscleadreading-hub/" class="link-btn" target="_self">1. 普通話水平測試朗讀作品（跟讀版）</a>
+                    <a href="https://echo02-game.github.io/pscwordshub/" class="link-btn" target="_self">2. 普通話水平測試朗讀作品——難點字詞練習詞卡</a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- 頁尾 -->
+    <footer>
+        網頁僅供VTC内部使用。訓練局普通話培訓測試中心版權所有。
+    </footer>
+
+    <!-- 瀏覽人次統計 -->
+    <div id="counter">
+        <a href="https://www.freecounterstat.com" title="website counter">
+            <img src="https://counter1.optistats.ovh/private/freecounterstat.php?c=6ge247hdpn5yjddcmerbb6xc9j8816l4" border="0" title="website counter" alt="website counter">
+        </a>
+    </div>
+
+</body>
+</html>
