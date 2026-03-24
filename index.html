@@ -209,6 +209,7 @@
         }
 
         /* 修正後的統計器：嚴格固定在左下角，不可點擊，無漂浮動畫 */
+                /* 修正後的統計器：固定左下角、預設隱藏、懸停顯示 */
         #counter {
             position: fixed;
             bottom: 20px;
@@ -218,8 +219,19 @@
             padding: 8px 12px;
             border-radius: 10px;
             box-shadow: 0 4px 15px rgba(0,0,0,0.08);
-            pointer-events: none; /* 完全禁用滑鼠與觸控點擊事件 */
+            
+            /* 預設為透明不可見 */
+            opacity: 0; 
+            transition: opacity 0.4s ease; 
+            /* 允許滑鼠事件，這樣滑鼠移過去才能觸發顯示 */
+            pointer-events: auto; 
         }
+
+        /* 當滑鼠移動到該區域時，改變透明度使其顯示 */
+        #counter:hover {
+            opacity: 1;
+        }
+
 
         /* 手機版適配 */
         @media (max-width: 600px) {
