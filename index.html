@@ -12,7 +12,8 @@
             --text-main: #333333;
             --cat1-color: #F7A5A5; 
             --cat2-color: #6D94C5;
-            --cat3-color: #61d4b3; 
+            /* 將下方的 #61d4b3 替換為你的目標顏色代碼 */
+            --cat3-color: #CFAB8D; 
         }
 
         /* ================= 全局樣式與圓體字型 ================= */
@@ -143,6 +144,7 @@
 
         .cat-1 { border-color: var(--cat1-color); }
         .cat-2 { border-color: var(--cat2-color); }
+        .cat-3 { border-color: var(--cat3-color); }
 
         .category-title {
             font-size: 1.4em;
@@ -154,6 +156,7 @@
         }
         .cat-1 .category-title { color: var(--cat1-color); }
         .cat-2 .category-title { color: var(--cat2-color); }
+        .cat-3 .category-title { color: var(--cat3-color); }
 
         /* ================= 點擊按鈕 ================= */
         .links-group {
@@ -186,6 +189,8 @@
         .cat-1 .link-btn::before { content: '🎮'; }
         .cat-2 .link-btn:nth-child(1)::before { content: '🎙️'; } 
         .cat-2 .link-btn:nth-child(2)::before { content: '📝'; } 
+        .cat-3 .link-btn:nth-child(1)::before { content: '💬'; } 
+        .cat-3 .link-btn:nth-child(2)::before { content: '⏳'; } 
 
         .link-btn:hover, .link-btn:active {
             background-color: #fcfcfc;
@@ -195,6 +200,7 @@
         
         .cat-1 .link-btn:hover { border-color: var(--cat1-color); color: var(--cat1-color); }
         .cat-2 .link-btn:hover { border-color: var(--cat2-color); color: var(--cat2-color); }
+        .cat-3 .link-btn:hover { border-color: var(--cat3-color); color: var(--cat3-color); }
 
         /* ================= 底部與統計器 ================= */
         footer {
@@ -208,8 +214,7 @@
             z-index: 10;
         }
 
-        /* 修正後的統計器：嚴格固定在左下角，不可點擊，無漂浮動畫 */
-                /* 修正後的統計器：固定左下角、預設隱藏、懸停顯示 */
+        /* 統計器：固定左下角、預設隱藏、懸停顯示 */
         #counter {
             position: fixed;
             bottom: 20px;
@@ -231,7 +236,6 @@
         #counter:hover {
             opacity: 1;
         }
-
 
         /* 手機版適配 */
         @media (max-width: 600px) {
@@ -284,6 +288,15 @@
                 <div class="links-group">
                     <a href="https://echo02-game.github.io/pscleadreading-hub/" class="link-btn" target="_self">1. 普通話水平測試朗讀作品（跟讀版）</a>
                     <a href="https://echo02-game.github.io/pscwordshub/" class="link-btn" target="_self">2. 普通話水平測試朗讀作品——難點字詞練習詞卡</a>
+                </div>
+            </div>
+
+            <!-- 類別三 -->
+            <div class="module-card cat-3">
+                <h2 class="category-title">🗣️ 命題説話練習</h2>
+                <div class="links-group">
+                    <a href="https://echo02-game.github.io/psctopics01/" class="link-btn" target="_self">1. 命題説話練習【關鍵詞】</a>
+                    <a href="#" class="link-btn" target="_self">2. TBC</a>
                 </div>
             </div>
 
